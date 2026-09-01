@@ -1,6 +1,7 @@
 #pragma once
 
 #include "../core/Math.hpp"
+#include "../core/Random.hpp"
 #include "../core/Config.hpp"
 
 namespace gta2 {

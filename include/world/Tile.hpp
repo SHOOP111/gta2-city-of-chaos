@@ -18,6 +18,16 @@ struct Tile {
     uint8_t variation = 0;       // Visual texture variation
     ColorRGBA tint = ColorRGBA::White();
 
+    [[nodiscard]] static Tile MakeGrass(GangFaction gang = GangFaction::None) {
+        Tile t;
+        t.type = TileType::Grass;
+        t.territory = gang;
+        t.friction = 0.85f;
+        t.isCollidable = false;
+        t.tint = {40, 110, 45, 255};
+        return t;
+    }
+
     [[nodiscard]] static Tile MakeRoad(GangFaction gang = GangFaction::None) {
         Tile t;
         t.type = TileType::RoadAsphalt;

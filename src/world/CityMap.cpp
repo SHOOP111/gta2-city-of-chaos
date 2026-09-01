@@ -13,16 +13,6 @@ void CityMap::initialize(int width, int height, float tileSize) {
     generateAnywhereCity();
 }
 
-Tile Tile::MakeGrass() {
-    Tile t;
-    t.type = TileType::Grass;
-    t.territory = GangFaction::None;
-    t.friction = 0.85f;
-    t.isCollidable = false;
-    t.tint = {40, 110, 45, 255};
-    return t;
-}
-
 void CityMap::generateAnywhereCity() {
     m_tiles.assign(static_cast<size_t>(m_width * m_height), Tile::MakeGrass());
     m_roadGraph.clear();
