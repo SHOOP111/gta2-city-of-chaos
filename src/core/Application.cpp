@@ -195,7 +195,7 @@ void Application::renderGameWorld() {
         // Headlights cone at night
         if (m_engine.getDayNightCycle().areStreetlightsActive() || v.isSirenActive()) {
             Vec2 fwd = v.getForwardVector();
-            Vec2 lightPos = sp + Vector2{fwd.x * 20.0f, fwd.y * 20.0f};
+            Vec2 lightPos = sp + Vec2{fwd.x * 20.0f, fwd.y * 20.0f};
             DrawCircleGradient(static_cast<int>(lightPos.x), static_cast<int>(lightPos.y), 45.0f * cam.getZoom(), ColorAlpha(YELLOW, 0.4f), ColorAlpha(YELLOW, 0.0f));
         }
     }

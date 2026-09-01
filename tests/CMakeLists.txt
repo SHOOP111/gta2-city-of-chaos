@@ -23,5 +23,4 @@ target_include_directories(gta2_tests PRIVATE
 )
 
 include(CTest)
-include(Catch)
-catch_discover_tests(gta2_tests)
+add_test(NAME gta2_tests COMMAND gta2_tests)

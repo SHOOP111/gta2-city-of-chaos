@@ -20,6 +20,7 @@ struct Vec2 {
 
     constexpr Vec2 operator+(const Vec2& rhs) const noexcept { return {x + rhs.x, y + rhs.y}; }
     constexpr Vec2 operator-(const Vec2& rhs) const noexcept { return {x - rhs.x, y - rhs.y}; }
+    constexpr Vec2 operator-() const noexcept { return {-x, -y}; }
     constexpr Vec2 operator*(float scalar) const noexcept { return {x * scalar, y * scalar}; }
     constexpr Vec2 operator/(float scalar) const noexcept {
         float inv = 1.0f / scalar;
@@ -127,6 +128,11 @@ struct ColorRGBA {
     constexpr ColorRGBA() = default;
     constexpr ColorRGBA(uint8_t r_, uint8_t g_, uint8_t b_, uint8_t a_ = 255)
         : r(r_), g(g_), b(b_), a(a_) {}
+    constexpr ColorRGBA(int r_, int g_, int b_, int a_ = 255)
+        : r(static_cast<uint8_t>(r_)),
+          g(static_cast<uint8_t>(g_)),
+          b(static_cast<uint8_t>(b_)),
+          a(static_cast<uint8_t>(a_)) {}
 
     static constexpr ColorRGBA Red() { return {255, 0, 0, 255}; }
     static constexpr ColorRGBA Green() { return {0, 255, 0, 255}; }

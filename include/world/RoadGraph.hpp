@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstdint>
 #include "../core/Math.hpp"
+#include "../core/Random.hpp"
 
 namespace gta2 {
 

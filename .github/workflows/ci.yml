@@ -64,10 +64,7 @@ jobs:
           echo "CXX=${{ matrix.cxx }}" >> $GITHUB_ENV
 
       - name: Configure CMake
-        run: >
-          cmake -B build
-          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
-          -DBUILD_TESTS=ON
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON
 
       - name: Build All Targets
         run: cmake --build build --config ${{ matrix.build_type }} --parallel

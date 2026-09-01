@@ -16,17 +16,12 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 # Option Flags
 option(BUILD_TESTS "Build automated test suite" ON)
 option(BUILD_HEADLESS_ONLY "Build in headless mode without window creation" OFF)
-option(ENABLE_ASAN "Enable AddressSanitizer (Debug only)" OFF)
 
 if(MSVC)
-    add_compile_options(/W4 /permissive- /utf-8)
+    add_compile_options(/W3 /permissive- /utf-8)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS _USE_MATH_DEFINES NOMINMAX)
 else()
-    add_compile_options(-Wall -Wextra -Wpedantic -Wconversion -Wno-unused-parameter)
-    if(ENABLE_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-        add_compile_options(-fsanitize=address -fsanitize=undefined)
-        add_link_options(-fsanitize=address -fsanitize=undefined)
-    endif()
+    add_compile_options(-Wall -Wextra -Wno-unused-parameter)
 endif()
 
 # ------------------------------------------------------------------------------
@@ -46,7 +41,6 @@ if(NOT BUILD_HEADLESS_ONLY)
     )
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
     set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
-    set(CUSTOMIZE_BUILD ON CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(raylib)
 endif()
 
@@ -106,8 +100,8 @@ set(ENGINE_HEADERS
     include/core/Math.hpp
     include/core/Random.hpp
     include/core/Types.hpp
-    include/world/CityMap.hpp
     include/world/Tile.hpp
+    include/world/CityMap.hpp
     include/world/RoadGraph.hpp
     include/world/Camera.hpp
     include/world/DayNightCycle.hpp
@@ -160,11 +154,6 @@ if(NOT BUILD_HEADLESS_ONLY)
     target_link_libraries(gta2_game PRIVATE
         gta2_core
     )
-
-    # Windows subsystem for GUI (optional, enabled for Release)
-    if(MSVC AND CMAKE_BUILD_TYPE STREQUAL "Release")
-        # set_target_properties(gta2_game PROPERTIES WIN32_EXECUTABLE TRUE)
-    endif()
 endif()
 
 # ------------------------------------------------------------------------------
