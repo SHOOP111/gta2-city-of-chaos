@@ -3,6 +3,7 @@
 #include <unordered_map>
 #include <string>
 #include "../core/Types.hpp"
+#include "../core/Math.hpp"
 
 namespace gta2 {
 
@@ -12,8 +13,8 @@ struct GangInfo {
     std::string leaderName;
     float respect = 0.0f; // -100.0f (Hated/Hostile) to +100.0f (Allied)
     ColorRGBA primaryColor;
-    VehicleType signatureCar;
-    WeaponType signatureWeapon;
+    VehicleType signatureCar = VehicleType::Sedan;
+    WeaponType signatureWeapon = WeaponType::Fists;
 };
 
 class GangSystem {

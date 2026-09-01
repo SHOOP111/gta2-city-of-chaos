@@ -2,7 +2,7 @@
 
 #include <cmath>
 #include <algorithm>
-#include <numbers>
+#include <cstdint>
 
 namespace gta2 {
 
@@ -126,8 +126,6 @@ struct ColorRGBA {
     uint8_t a = 255;
 
     constexpr ColorRGBA() = default;
-    constexpr ColorRGBA(uint8_t r_, uint8_t g_, uint8_t b_, uint8_t a_ = 255)
-        : r(r_), g(g_), b(b_), a(a_) {}
     constexpr ColorRGBA(int r_, int g_, int b_, int a_ = 255)
         : r(static_cast<uint8_t>(r_)),
           g(static_cast<uint8_t>(g_)),
