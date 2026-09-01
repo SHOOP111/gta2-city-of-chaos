@@ -1,0 +1,69 @@
+name: Release Packaging
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+jobs:
+  package-release:
+    name: Package Release Binary - ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Install Linux Dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev \
+            libgl1-mesa-dev libglu1-mesa-dev libasound2-dev libpulse-dev
+
+      - name: Configure CMake
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DBUILD_TESTS=OFF
+
+      - name: Build Release Binary
+        run: cmake --build build --config Release --parallel
+
+      - name: Package Binary (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          mkdir -p dist
+          cp build/gta2_game dist/
+          cp README.md dist/
+          tar -czvf gta2-city-of-chaos-linux-x86_64.tar.gz -C dist .
+
+      - name: Package Binary (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          New-Item -ItemType Directory -Path dist
+          if (Test-Path build/Release/gta2_game.exe) {
+            Copy-Item build/Release/gta2_game.exe dist/
+          } else {
+            Copy-Item build/gta2_game.exe dist/
+          }
+          Copy-Item README.md dist/
+          Compress-Archive -Path dist/* -DestinationPath gta2-city-of-chaos-windows-x64.zip
+
+      - name: Upload Linux Asset
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: linux-build
+          path: gta2-city-of-chaos-linux-x86_64.tar.gz
+
+      - name: Upload Windows Asset
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
+        with:
+          name: windows-build
+          path: gta2-city-of-chaos-windows-x64.zip
