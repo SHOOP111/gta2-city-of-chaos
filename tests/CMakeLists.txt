@@ -1,5 +1,6 @@
 # Tests CMakeLists.txt
 set(TEST_SOURCES
+    test_main.cpp
     test_math.cpp
     test_physics.cpp
     test_gangs.cpp
@@ -15,7 +16,6 @@ add_executable(gta2_tests
 
 target_link_libraries(gta2_tests PRIVATE
     gta2_core
-    Catch2::Catch2WithMain
 )
 
 target_include_directories(gta2_tests PRIVATE

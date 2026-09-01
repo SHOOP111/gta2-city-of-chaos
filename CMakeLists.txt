@@ -3,7 +3,7 @@
 # ==============================================================================
 cmake_minimum_required(VERSION 3.22)
 
-# Compatibility with CMake 3.31+ / 4.0+ for older subproject policies
+# Compatibility with modern CMake policy behavior
 set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "Minimum policy version" FORCE)
 
 project(GTA2CityOfChaos
@@ -46,18 +46,6 @@ if(NOT BUILD_HEADLESS_ONLY)
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
     set(BUILD_GAMES OFF CACHE BOOL "" FORCE)
     FetchContent_MakeAvailable(raylib)
-endif()
-
-# 2. Catch2 (Automated Testing Framework)
-if(BUILD_TESTS)
-    message(STATUS "Fetching Catch2 v3.5.2...")
-    FetchContent_Declare(
-        Catch2
-        GIT_REPOSITORY https://github.com/catchorg/Catch2.git
-        GIT_TAG v3.5.2
-        GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(Catch2)
 endif()
 
 # ------------------------------------------------------------------------------

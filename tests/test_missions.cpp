@@ -1,7 +1,7 @@
-#include <catch2/catch_test_macros.hpp>
+#include "testing/TestHarness.hpp"
 #include "systems/MissionSystem.hpp"
 
-using namespace gta2 {
+using namespace gta2;
 
 TEST_CASE("Mission Lifecycle & Objectives", "[missions]") {
     MissionSystem missions;
@@ -37,5 +37,3 @@ TEST_CASE("Mission Lifecycle & Objectives", "[missions]") {
         REQUIRE(missions.getKillFrenzy().isCompleted == true);
     }
 }
-
-} // namespace gta2

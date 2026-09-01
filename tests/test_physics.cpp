@@ -1,5 +1,4 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_approx.hpp>
+#include "testing/TestHarness.hpp"
 #include "entities/Vehicle.hpp"
 #include "systems/PhysicsSystem.hpp"
 #include "world/CityMap.hpp"
@@ -53,8 +52,6 @@ TEST_CASE("Physics Raycast against Solid Walls", "[physics]") {
     Vec2 end(64.0f * 5.0f, 64.0f);
     Vec2 hitPoint, hitNormal;
 
-    // Raycast runs successfully
-    bool hit = physics.raycast(map, start, end, hitPoint, hitNormal);
-    // Raycasting logic executed
+    physics.raycast(map, start, end, hitPoint, hitNormal);
     REQUIRE(hitPoint.lengthSq() >= 0.0f);
 }

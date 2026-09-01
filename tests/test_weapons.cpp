@@ -1,5 +1,4 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_approx.hpp>
+#include "testing/TestHarness.hpp"
 #include "systems/WeaponSystem.hpp"
 #include "entities/Projectile.hpp"
 
@@ -9,10 +8,10 @@ TEST_CASE("Weapon System & Arsenal", "[weapons]") {
     WeaponSystem weapons;
 
     SECTION("Rocket Launcher is Explosive with High Damage") {
-        const auto& r傷 = weapons.getStats(WeaponType::RocketLauncher);
-        REQUIRE(r傷.damage >= 200.0f);
-        REQUIRE(r傷.createsExplosion == true);
-        REQUIRE(r傷.explosionRadius > 50.0f);
+        const auto& rStats = weapons.getStats(WeaponType::RocketLauncher);
+        REQUIRE(rStats.damage >= 200.0f);
+        REQUIRE(rStats.createsExplosion == true);
+        REQUIRE(rStats.explosionRadius > 50.0f);
     }
 
     SECTION("Assault Rifle has Rapid Fire and Range") {

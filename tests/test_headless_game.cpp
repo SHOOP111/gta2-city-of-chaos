@@ -1,4 +1,4 @@
-#include <catch2/catch_test_macros.hpp>
+#include "testing/TestHarness.hpp"
 #include "core/Application.hpp"
 #include "core/Engine.hpp"
 
@@ -36,11 +36,9 @@ TEST_CASE("Full Headless Game Loop & Engine Simulation", "[headless]") {
     }
 
     SECTION("Vehicle Carjacking Simulation") {
-        // Spawn a vehicle right in front of player
         Vec2 playerPos = engine.getPlayer().getPosition();
         auto v = engine.spawnVehicle(VehicleType::Sedan, playerPos + Vec2(10.0f, 10.0f));
 
-        // Trigger vehicle entry
         engine.handlePlayerInput(
             Vec2(0.0f, 0.0f),
             false,

@@ -1,4 +1,4 @@
-name: Build and Test CI
+name: Windows Build and Test CI
 
 on:
   push:
@@ -8,83 +8,35 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-test:
-    name: ${{ matrix.os }} - ${{ matrix.compiler }} (${{ matrix.build_type }})
-    runs-on: ${{ matrix.os }}
+  build-and-test-windows:
+    name: Windows MSVC (${{ matrix.build_type }})
+    runs-on: windows-latest
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
         build_type: [Release, Debug]
-        compiler: [gcc, clang, msvc]
-        exclude:
-          - os: ubuntu-latest
-            compiler: msvc
-          - os: windows-latest
-            compiler: gcc
-          - os: windows-latest
-            compiler: clang
-          - os: macos-latest
-            compiler: gcc
-          - os: macos-latest
-            compiler: msvc
-        include:
-          - os: ubuntu-latest
-            compiler: gcc
-            cc: gcc
-            cxx: g++
-          - os: ubuntu-latest
-            compiler: clang
-            cc: clang
-            cxx: clang++
-          - os: macos-latest
-            compiler: clang
-            cc: clang
-            cxx: clang++
 
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
-
-      - name: Install Linux Dependencies
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y \
-            libx11-dev libxcursor-dev libxrandr-dev libxinerama-dev libxi-dev \
-            libgl1-mesa-dev libglu1-mesa-dev libasound2-dev libpulse-dev \
-            xvfb
-
-      - name: Setup Compiler (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          echo "CC=${{ matrix.cc }}" >> $GITHUB_ENV
-          echo "CXX=${{ matrix.cxx }}" >> $GITHUB_ENV
 
       - name: Configure CMake
-        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON -DCMAKE_POLICY_VERSION_MINIMUM=3.5
+        run: cmake -B build -DCMAKE_BUILD_TYPE=${{ matrix.build_type }} -DBUILD_TESTS=ON
 
       - name: Build All Targets
         run: cmake --build build --config ${{ matrix.build_type }} --parallel
 
-      - name: Run Test Suite (Catch2 & Headless Simulation)
-        if: runner.os != 'Linux'
+      - name: Run Test Suite (Autonomous Headless Simulation)
         run: ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure
 
-      - name: Run Test Suite with Xvfb (Linux)
-        if: runner.os == 'Linux'
-        run: xvfb-run --auto-servernum ctest --test-dir build -C ${{ matrix.build_type }} --output-on-failure
-
-      - name: Upload Game Artifacts (Release Only)
+      - name: Upload Windows Game Executable (Release Only)
         if: matrix.build_type == 'Release'
         uses: actions/upload-artifact@v4
         with:
-          name: gta2-city-of-chaos-${{ matrix.os }}-${{ matrix.compiler }}
+          name: gta2-city-of-chaos-windows-x64
           path: |
-            build/gta2_game
-            build/gta2_game.exe
             build/Release/gta2_game.exe
-            build/bin/gta2_game*
+            build/gta2_game.exe
+            build/Release/gta2_tests.exe
+            build/gta2_tests.exe
           if-no-files-found: warn

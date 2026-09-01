@@ -1,5 +1,4 @@
-#include <catch2/catch_test_macros.hpp>
-#include <catch2/catch_approx.hpp>
+#include "testing/TestHarness.hpp"
 #include "systems/GangSystem.hpp"
 
 using namespace gta2;
