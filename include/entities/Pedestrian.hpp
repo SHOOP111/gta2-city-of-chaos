@@ -3,6 +3,7 @@
 #include "Entity.hpp"
 #include "PedestrianAI.hpp"
 #include "../core/Types.hpp"
+#include "../core/Math.hpp"
 
 namespace gta2 {
 
@@ -56,7 +57,7 @@ public:
     [[nodiscard]] bool isBurning() const noexcept { return m_isBurning; }
     void setBurning(bool burning) noexcept { m_isBurning = burning; }
 
-private:
+protected:
     void onKilled() override;
 
     PedestrianRole m_role = PedestrianRole::Civilian;
