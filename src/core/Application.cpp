@@ -1,4 +1,5 @@
 #include "core/Application.hpp"
+#include "core/AssetManager.hpp"
 #include <iostream>
 #include <cmath>
 
@@ -22,6 +23,7 @@ bool Application::initialize(int width, int height, bool fullscreen) {
     SetConfigFlags(FLAG_VSYNC_HINT | FLAG_MSAA_4X_HINT);
     InitWindow(m_windowWidth, m_windowHeight, globalConfig().windowTitle.c_str());
     SetTargetFPS(globalConfig().targetFPS);
+    globalAssets().initialize();
 #endif
 
     m_engine.initialize(false);
@@ -37,6 +39,7 @@ bool Application::initialize(int width, int height, bool fullscreen) {
 void Application::shutdown() {
 #ifndef HEADLESS_MODE
     if (m_running) {
+        globalAssets().shutdown();
         CloseWindow();
     }
 #endif

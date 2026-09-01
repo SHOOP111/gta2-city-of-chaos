@@ -55,6 +55,7 @@ set(ENGINE_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 set(ENGINE_SOURCES
     src/core/Application.cpp
+    src/core/AssetManager.cpp
     src/core/Config.cpp
     src/core/Engine.cpp
     src/core/Math.cpp
@@ -87,6 +88,7 @@ set(ENGINE_SOURCES
 
 set(ENGINE_HEADERS
     include/core/Application.hpp
+    include/core/AssetManager.hpp
     include/core/Config.hpp
     include/core/Engine.hpp
     include/core/Math.hpp
