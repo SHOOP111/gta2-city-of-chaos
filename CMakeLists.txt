@@ -2,6 +2,10 @@
 # GTA 2: City of Chaos - Modern C++20 Open-World Game Engine
 # ==============================================================================
 cmake_minimum_required(VERSION 3.22)
+
+# Compatibility with CMake 3.31+ / 4.0+ for older subproject policies
+set(CMAKE_POLICY_VERSION_MINIMUM 3.5 CACHE STRING "Minimum policy version" FORCE)
+
 project(GTA2CityOfChaos
     VERSION 1.0.0
     DESCRIPTION "Advanced C++20 GTA 2 Clone Open-World Game Engine"
@@ -32,11 +36,11 @@ set(FETCHCONTENT_QUIET ON)
 
 # 1. Raylib (Windowing, Audio, Rendering, Input)
 if(NOT BUILD_HEADLESS_ONLY)
-    message(STATUS "Fetching Raylib 5.0...")
+    message(STATUS "Fetching Raylib 5.5...")
     FetchContent_Declare(
         raylib
         GIT_REPOSITORY https://github.com/raysan5/raylib.git
-        GIT_TAG 5.0
+        GIT_TAG 5.5
         GIT_SHALLOW TRUE
     )
     set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
